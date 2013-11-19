@@ -1,9 +1,12 @@
+//Requirements
 var _ = require('underscore');
 var twitter = require("ntwitter");
 var credentials = require("./credentials.js");
 
-var keywords = ['beirut', 'beirut iran'];
+//Dummy data provider
+var keywords = ['beirut'];
 
+//Filters is an array that will be used to categorize the tweets
 var filters = []
 _.each(keywords, function(element, index) {
 	if (element.split(" ").length > 1) {
@@ -15,8 +18,8 @@ _.each(keywords, function(element, index) {
 	}
 })
 
+//Start nTwitter
 var twit = new twitter(credentials);
-
 twit.stream('statuses/filter', {"track": keywords.join()}, function(stream) {
 	stream.on('data', function(data) {
 		processTweet(data, function(data) {
@@ -29,6 +32,7 @@ twit.stream('statuses/filter', {"track": keywords.join()}, function(stream) {
 	})
 })
 
+//Function that processes a tweet
 function processTweet(element, handler) {
 	var lat, lon;
 	if (element.geo && element.geo.type === 'Point') {
@@ -46,7 +50,7 @@ function processTweet(element, handler) {
 		}
 	}
 
-//	if (lat && lon) {
+//	if (lat && lon) //Uncomment if you want to include only tweets with geodata
 		handler({
 			lon: lon,
 			lat: lat,
@@ -61,7 +65,6 @@ function processTweet(element, handler) {
 			retweets: element.retweet_count || 0,
 			retweeted_status: processRetweet(element)
 		});
-//	}
 
 	function processRetweet(element) {
 		if (element.retweeted_status) {
