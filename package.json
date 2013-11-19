@@ -1,0 +1,16 @@
+{
+  "name": "streamTwitter",
+  "version": "0.0.0",
+  "description": "Creates a Twitter stream and a method to start/stop with different keywords.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "Marc Farra",
+  "license": "MIT",
+  "dependencies": {
+    "ntwitter": "~0.5.0",
+    "underscore": "~1.5.2"
+  }
+}
