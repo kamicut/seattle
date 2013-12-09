@@ -1,4 +1,4 @@
-var Twitter = require("ntwitter"),
+var Twitter = require("twit"),
 	EventEmitter = require('events').EventEmitter,
 	_ = require('underscore');
 
@@ -9,10 +9,11 @@ function TwitterStream(config) {
 	this.config = config
 	this.keywords = [];
 	this.filters = [];
+	this.reconnect_attempts = this.config.reconnect_attempts || 4;
 	this.twit = new Twitter({
         consumer_key: this.config.consumer_key,
         consumer_secret: this.config.consumer_secret,
-        access_token_key: this.config.access_token_key,
+        access_token: this.config.access_token_key,
         access_token_secret: this.config.access_token_secret,
     });
 }
@@ -21,24 +22,23 @@ TwitterStream.prototype = Object.create(EventEmitter.prototype);
 
 TwitterStream.prototype.stream = function() {
 	var self = this;
-	self.twit.stream('statuses/filter', {"track": self.keywords.join()}, function(stream) {
-		self.currentStream = stream
-		stream.on('data', function(data) {
-			self.processTweet(data, function(tweet) {
-				self.emit('data', tweet)
-			})
+	console.log(self.keywords)
+	self.currentStream = self.twit.stream('statuses/filter', 
+		{track: self.keywords.join()})
+	
+	self.currentStream.on('tweet', function(data) {
+		self.processTweet(data, function(tweet) {
+			self.emit('data', tweet)
 		})
-		stream.on('end', reconnect)
-		stream.on('destroy', reconnect)
 	})
-
-	function reconnect(response) {
+	
+	self.currentStream.on('disconnect', function reconnect(response) {
 		reconnectAttempts++;
-	    if( reconnectAttempts >= self.config.twitter.reconnect_attempts ) {
+	    if( reconnectAttempts >= self.reconnect_attempts ) {
 	        return self.emit('error', new Error('@end: Too many reconnection attempts'));
 	    }
 	    self.stream()
-	} 
+	})
 }
 
 TwitterStream.prototype.setKeywords = function(keywords) {
@@ -55,7 +55,8 @@ TwitterStream.prototype.setKeywords = function(keywords) {
 		}
 	})
 	if (typeof self.currentStream != 'undefined') {
-		self.currentStream.destroy();
+		self.currentStream.stop();
+		self.stream();
 	} else {
 		self.stream();
 	}	
