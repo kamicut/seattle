@@ -89,7 +89,7 @@ TwitterStream.prototype.processTweet = function(element, handler) {
 			user: '@' + element.user.screen_name,
 			user_id: element.user.id_str,
 			user_image: element.user.profile_image_url,
-			category: getTags(element),
+			categories: getTags(element),
 			media: getMedia(element),
 			id_str: element.id_str,
 			retweets: element.retweet_count || 0,

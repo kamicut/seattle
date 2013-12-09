@@ -1,0 +1,10 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	var socket = io.connect();
+	 socket.on('message', function (data) {
+	  console.log(data);
+	 });
+
+	 socket.emit('subscribe', "{{topic}}");
+
+</script>
