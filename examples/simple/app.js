@@ -1,6 +1,6 @@
 //Requirements
 var credentials = require("./credentials.js")
-  , TwitterStream = require("./twitterStream.js")
+  , TwitterStream = require("../../lib/twitterStream.js")
   , express = require('express')
   , app = express()
   , server = require('http').createServer(app)
