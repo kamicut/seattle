@@ -1,0 +1,18 @@
+<ul id="tweets"></ul>
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script>
+	var socket = io.connect();
+	var MAX = 30;
+	var num = 0;
+	 socket.on('message', function (data) {
+	 	num += 1
+	 	$("#tweets").prepend("<li>" + data.text + "</li>")
+	 	if (num > MAX) {
+	 	  $("#tweets li:last").remove()
+	 	}
+	 });
+
+	 socket.emit('subscribe', "{{topic}}");
+
+</script>
