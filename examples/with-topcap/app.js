@@ -13,9 +13,6 @@ io.set('log level', 2)
 //Socket handler
 io.sockets.on('connection', function(socket) {
 	socket.on('subscribe', function(topic) { 
-        console.log('joining topic', topic);
-        console.log(topic)
-        console.log(topics)
         topics[topic].forEach(function (keyword) {
           keyword.split(" ").forEach(function (split_keyword) {
             socket.join(split_keyword)
@@ -24,7 +21,6 @@ io.sockets.on('connection', function(socket) {
     })
 
     socket.on('unsubscribe', function(topic) {  
-        console.log('leaving topic', topic);
         topics[topic].forEach(function (keyword) {
         	socket.leave(keyword)
         });
@@ -61,7 +57,6 @@ tc.on('data', function(data) {
     var tuple = recordsToModel(data["records"])
     ts.setKeywords(tuple[0])
     topics = tuple[1]
-    console.log("Topics are: " + topics)
   }
 })
 
@@ -76,6 +71,7 @@ ts.on('data', function(data) {
 server.listen(3000)
 app.set('view engine', 'html');
 app.enable('view cache');
+app.set('layout', 'layout')
 app.engine('html', require('hogan-express'))
 app.set('views', __dirname + '/views')
 

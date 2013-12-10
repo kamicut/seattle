@@ -1,3 +1,4 @@
+<a href="/">Back</a>
 <ul id="tweets"></ul>
 <script src="/socket.io/socket.io.js"></script>
 <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -6,13 +7,14 @@
 	var MAX = 30;
 	var num = 0;
 	 socket.on('message', function (data) {
+	 	console.log(data.text)
 	 	num += 1
-	 	$("#tweets").prepend("<li>" + data.text + "</li>")
+	 	$("#tweets").prepend("<li><strong>" +data.user +"</strong>: " + 
+	 		data.text + "</li>")
 	 	if (num > MAX) {
 	 	  $("#tweets li:last").remove()
 	 	}
 	 });
 
 	 socket.emit('subscribe', "{{topic}}");
-
 </script>
