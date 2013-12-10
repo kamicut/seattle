@@ -7,7 +7,6 @@
 	var MAX = 30;
 	var num = 0;
 	 socket.on('message', function (data) {
-	 	console.log(data.text)
 	 	num += 1
 	 	$("#tweets").prepend("<li><strong>" +data.user +"</strong>: " + 
 	 		data.text + "</li>")
