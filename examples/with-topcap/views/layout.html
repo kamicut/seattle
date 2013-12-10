@@ -1,5 +1,8 @@
+<head>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width'>
 <style> 
-* {
+body {
 	font-family: "Helvetica", sans-serif;
 	font-weight: 200;
 }
@@ -19,5 +22,15 @@ a {
 strong {
 	font-weight: bold;
 }
+@media all and (orientation:portrait) { 
+	ul { padding-left: 2px;}
+}
+@media all and (orientation:landscape) {
+	body {font-size: 60%;}
+	ul { padding-left: 2px;}
+}
 </style>
+</head>
+<body>
 {{{yield}}}
+</body>
