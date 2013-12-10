@@ -9,11 +9,10 @@
   "repository": "",
   "author": "Marc Farra",
   "dependencies": {
-    "underscore": "~1.5.2",
     "twit": "~1.1.11",
     "underscore": "~1.5.2",
     "express": "~3.4.6",
     "hogan-express": "~0.5.1",
-    "socket.io": "~0.9.16"
+    "socket.io": "~0.9.16",
   }
 }
