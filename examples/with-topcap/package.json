@@ -1,0 +1,20 @@
+{
+  "name": "seattle-with-topcap",
+  "main": "app.js",
+  "dependencies": {
+    "underscore": "~1.5.2",
+    "twit": "~1.1.11",
+    "express": "~3.4.6",
+    "hogan-express": "~0.5.1",
+    "socket.io": "~0.9.16",
+    "topcap": "0.0.2"
+  },
+  "subdomain": "kamicut-seattle",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "version": "0.0.0",
+  "engines": {
+    "node": "0.10.x"
+  }
+}
